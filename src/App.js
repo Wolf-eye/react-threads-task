@@ -23,7 +23,8 @@ class App extends Component {
 
   componentDidMount() {
     //fetching the data from the faked json API
-    const json_db = "http://localhost:3001/threads";
+    //const json_db = "http://localhost:3001/threads";
+    const json_db = "https://cors-anywhere.herokuapp.com/https://my-json-server.typicode.com/Wolf-eye/react-threads-task/threads"
     fetch(json_db)
       // .then(res => {
       //   if (!res.ok) {
@@ -104,7 +105,6 @@ class App extends Component {
         <>
           <div className="flex-container">
             {thread}
-            {/* <button onClick={this.handleClick}>Pesho</button> */}
           </div>
           {/* <div>{this.state.error}</div> */}
         </>
