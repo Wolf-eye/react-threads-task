@@ -26,12 +26,17 @@ class App extends Component {
     //const json_db = "http://localhost:3001/threads";
     const json_db = "https://cors-anywhere.herokuapp.com/https://my-json-server.typicode.com/Wolf-eye/react-threads-task/threads"
     fetch(json_db)
-      // .then(res => {
-      //   if (!res.ok) {
-      //     throw new Error(res.status);
-      //   }
-      // })
-      .then(resolve => resolve.json())
+      .then(resolve => {
+        //add some error handling, for example when server can't be found
+        if (resolve.status !== 200) {
+          this.setState({
+            error: new Error("Something shit happens")
+          })
+        } else {
+          return resolve.json()
+        }
+      })
+      //.then(resolve => resolve.json())
       .then(data => {
         data.map(threads => {
           //console.log(threads)
@@ -43,9 +48,7 @@ class App extends Component {
       })
       // throw an error if api call can't be fetched
       .catch(error => {
-        this.setState({
-          error: error.message
-        })
+        console.log(error.message)
       });
   }
 
@@ -99,6 +102,9 @@ class App extends Component {
     })
 
     if (!isLoaded) {
+      if(this.state.error){
+        return <div>Error: {this.state.error.message}</div>
+      }
       return <div>Loading...</div>
     } else {
       return (
