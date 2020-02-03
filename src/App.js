@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.scss';
 import Thread from './components/Thread';
+import Threads from './components/Threads';
 
 class App extends Component {
 
@@ -39,7 +40,6 @@ class App extends Component {
       //.then(resolve => resolve.json())
       .then(data => {
         data.map(threads => {
-          //console.log(threads)
           return this.setState({
             threads: [...this.state.threads, threads],
             isLoaded: true
@@ -60,33 +60,16 @@ class App extends Component {
       if (thread.length > 1) {
         return (
           // return wrapped block of threads, when messages in the array are more than one
-          <div
+          <Threads
             key={thread[0].id + "_wrapper"}
-            //className={`block-wrapper flex-wrapper ${this.state.expanded === thread[0].thread_id ? 'expanded' : ''}`}
-            className={`block-wrapper flex-wrapper ${this.state.expanded ? 'expanded' : ''}`}
-            onClick={this.handleClick}
-          >
-            {thread.map(element => {
-              return (
-                <Thread
-                  id={element.thread_id}
-                  key={element.id}
-                  subject={element.subject}
-                  question={element.question}
-                  text={element.text}
-                  createdAt={element.created_at}
-                  team={element.team}
-                  score={element.score}
-                />
-              )
-            })}
-            <div className={thread[0].score >= 6 ? "block-high-score" : "block-low-score"}>{thread.length} messages</div>
-          </div>
+            mappedThreads={thread}
+            handleClicks={this.handleClick}
+          />
         )
       } else {
-        // return a single thread
         return thread.map(element => {
           return (
+            // return a single thread
             <Thread
               key={element.id}
               subject={element.subject}
@@ -102,7 +85,7 @@ class App extends Component {
     })
 
     if (!isLoaded) {
-      if(this.state.error){
+      if (this.state.error) {
         return <div>Error: {this.state.error.message}</div>
       }
       return <div>Loading...</div>
@@ -112,7 +95,6 @@ class App extends Component {
           <div className="flex-container">
             {thread}
           </div>
-          {/* <div>{this.state.error}</div> */}
         </>
       )
     };
