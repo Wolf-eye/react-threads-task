@@ -39,12 +39,17 @@ class App extends Component {
       })
       //.then(resolve => resolve.json())
       .then(data => {
-        data.map(threads => {
-          return this.setState({
-            threads: [...this.state.threads, threads],
-            isLoaded: true
-          })
+        //the filter function in one line
+        this.setState({
+          threads: data.filter(filtredThread => filtredThread[0].score > 6),
+          isLoaded: true
         })
+        // data.map(threads => {
+        //   return this.setState({
+        //     threads: [...this.state.threads, threads],
+        //     isLoaded: true
+        //   })
+        // })
       })
       // throw an error if api call can't be fetched
       .catch(error => {
