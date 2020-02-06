@@ -7,10 +7,10 @@ $grey: #f2f2f2;
 
 /* Main Containers 
 ============================================= */
-body {
+body, html {
     font-family: 'Comfortaa', cursive;
     font-size: 10px;
-    background-color: $grey;
+    background: $grey;
 }
 
 .flex-container {
